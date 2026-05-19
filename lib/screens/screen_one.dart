@@ -22,9 +22,23 @@ class ScreenOne extends StatelessWidget {
             const Text("The below text should be 'Hello World'"),
             Localizer(
               builder: (s) {
-                return Text(
-                  S.of(context).helloWorld,
-                  style: theme.textTheme.displayMedium,
+                Localizations ancestor = context.findAncestorWidgetOfExactType<Localizations>()!;
+
+                return Column(
+                  children: [
+                    Text(
+                      s.helloWorld,
+                      style: theme.textTheme.displayMedium,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Application level Localizations: ${ancestor.isApplicationLevel}"),
+                        Text("Ancestor Locale: ${ancestor.locale}"),
+                        Text("Selected Locale: ${Localizations.localeOf(context)}"),
+                      ],
+                    )
+                  ],
                 );
               },
             ),
@@ -44,5 +58,11 @@ class ScreenOne extends StatelessWidget {
         builder: (context) => const ScreenTwo(),
       ),
     );
+  }
+}
+
+extension Something on Localizations {
+  List<LocalizationsDelegate<dynamic>> getDelegates() {
+    return delegates;
   }
 }
