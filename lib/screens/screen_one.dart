@@ -15,7 +15,7 @@ class ScreenOne extends StatelessWidget {
     return Theme(
       data: theme.copyWith(colorScheme: theme.colorScheme.copyWith(primary: Colors.red)),
       child: SimpleScreen(
-        title:  const Text("English"),
+        title: const Text("English"),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

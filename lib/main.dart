@@ -32,5 +32,3 @@ class Bugtest extends StatelessWidget {
     );
   }
 }
-
-
