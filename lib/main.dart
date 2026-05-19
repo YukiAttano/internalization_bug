@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'generated/l10n.dart';
+import 'l10n/l10n.dart';
 
 void main() {
   runApp(const Bugtest());
@@ -22,13 +23,25 @@ class Bugtest extends StatelessWidget {
       ),
       localizationsDelegates: const [
         S.delegate,
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: S.delegate.supportedLocales,
       locale: const Locale("en"),
+      supportedLocales: _supportedLocales(),
       home: const ScreenOne(),
     );
+  }
+
+  static List<Locale> _supportedLocales() {
+    var flutterLocales = AppLocalizations.supportedLocales;
+    var intlLocales = S.delegate.supportedLocales;
+
+    List<Locale> supported = flutterLocales.where((l) => intlLocales.contains(l)).toList();
+
+    assert(supported.length == intlLocales.length, "Locale mismatch: Intl supports less locales; Did you run `dart run intl_utils:generate`?");
+    assert(supported.length == flutterLocales.length, "Locale mismatch Fluter support less locales; Did you run `flutter gen-l10n`?");
+    return supported;
   }
 }

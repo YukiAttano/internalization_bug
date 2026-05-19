@@ -1,9 +1,9 @@
 import 'package:bugtest/screens/screen_one.dart';
 import 'package:bugtest/screens/simple_screen.dart';
-import 'package:bugtest/widgets/localizer.dart';
+import 'package:bugtest/widgets/flutter_localizer.dart';
+import 'package:bugtest/widgets/intl_localizer.dart';
+import 'package:bugtest/widgets/localization_comparison.dart';
 import 'package:flutter/material.dart';
-
-import '../generated/l10n.dart';
 
 class ScreenTwo extends StatelessWidget {
   const ScreenTwo({super.key});
@@ -15,23 +15,16 @@ class ScreenTwo extends StatelessWidget {
     return SimpleScreen(
       title: const Text("German"),
       body: Localizations.override(
-        context: context,
-        locale: const Locale('de'),
-        child: Builder(
-          builder: (context) {
+          context: context,
+          locale: const Locale('de'),
+          child: Builder(builder: (context) {
             Localizations ancestor = context.findAncestorWidgetOfExactType<Localizations>()!;
 
             return Column(
               children: [
-                const Text("The below text should be 'Hallo Welt'"),
-                Localizer(
-                  builder: (s) {
-                    return Text(
-                      s.helloWorld,
-                      style: theme.textTheme.displayMedium,
-                    );
-                  },
-                ),
+                const SelectableText("The below text should be 'Hallo Welt'"),
+                // "Hello World"
+                LocalizationComparison(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -42,9 +35,7 @@ class ScreenTwo extends StatelessWidget {
                 )
               ],
             );
-          }
-        )
-      ),
+          })),
       button: OutlinedButton(
         onPressed: () => _onNavigate(context),
         child: const Text("Push ONE"),
