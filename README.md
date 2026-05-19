@@ -2,15 +2,67 @@
 
 Bugtest
 
-## Getting Started
+## The bug
 
-This project is a starting point for a Flutter application.
+This project shows, that intl_utils generates a localization implementation which is not correctly scoped, 
+when a `Localizations.override` Widget was used on a previous Screen. See https://github.com/flutter/flutter/issues/143446
+for more information.
 
-A few resources to get you started if this is your first Flutter project:
+# Intl Setup
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Intl generates it's localization under the following circumstances:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+pubspec.yaml has the following entries:
+```yaml
+flutter_intl:
+  enabled: true
+```
+
+Config file:
+`pubspec.yaml` -> `flutter_intl` section
+
+Input files:
+```
+/lib/l10n/intl_en.arb
+/lib/l10n/intl_de.arb
+```
+
+Output files:
+```
+/lib/generated/intl/messages_all.dart
+/lib/generated/intl/messages_de.dart
+/lib/generated/intl/messages_en.dart
+/lib/generated/l10n.dart
+```
+
+triggered with:
+`dart run intl_utils:generate`
+
+# Flutter l10n Setup
+
+Flutter generates it's localization under the following circumstances:
+
+pubspec.yaml has the following entries:
+```yaml
+flutter:
+  generate: true
+```
+
+Config file:
+`l10n.yaml`
+
+Input files (defined by the config file):
+```
+/lib/l10n/intl_en.arb
+/lib/l10n/intl_de.arb
+```
+
+Output files:
+```
+/lib/l10n/l10n.dart
+/lib/l10n/l10n_de.dart
+/lib/l10n/l10n_en.dart
+```
+
+triggered with:
+`flutter gen-l10n`

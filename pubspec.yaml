@@ -60,7 +60,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  generate: true
+  generate: true # necessary for flutter gen-l10n
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -68,4 +68,5 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
 flutter_intl:
-  enabled: true
+  enabled: true # necessary for intl_utils:generate
+  # more configuration can be applied here, see https://pub.dev/packages/intl_utils#configure-package
